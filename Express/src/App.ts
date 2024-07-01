@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { User } from "./models/User";
 import { UserController } from "./Controllers/UserController";
+import { UserInterface } from "./Interfaces/UserInterface";
 const app = express();
 const port = 3000;
 app.use(express.json());
@@ -8,9 +8,9 @@ app.use(express.json());
 const userController = new UserController();
 
 app.post("/create", (req: Request, res: Response) => {
-  const { login, password } = req.body;
-  const user = userController.create(login, password);
-  return res.json(user);
+  const user: UserInterface = req.body;
+  const createUser = userController.create(user);
+  return res.json(createUser);
 });
 
 app.get("/home", (req: Request, res: Response) => {
@@ -20,9 +20,9 @@ app.get("/home", (req: Request, res: Response) => {
 
 app.put("/update/:id", (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const { login, password } = req.body;
-  const user = userController.update(id, login, password);
-  return res.json(user);
+  const user: UserInterface = req.body;
+  const updateUser = userController.update(id, user);
+  return res.json(updateUser);
 });
 
 app.delete("/delete/:id", (req: Request, res: Response) => {

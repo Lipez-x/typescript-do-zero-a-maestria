@@ -1,3 +1,4 @@
+import { UserInterface } from "../Interfaces/UserInterface";
 import { User } from "../models/User";
 
 export class UserController {
@@ -9,9 +10,9 @@ export class UserController {
     this.item = [];
   }
 
-  create(login: string, password: string) {
-    const user = new User(this.id++, login, password);
-    this.item.push(user);
+  create(user: UserInterface) {
+    const createUser = new User(this.id++, user.login, user.password);
+    this.item.push(createUser);
     return "Usuário criado com sucesso";
   }
 
@@ -19,11 +20,11 @@ export class UserController {
     return this.item;
   }
 
-  update(id: number, login: string, password: string) {
-    const user = this.item.find((user: User) => user.getId === id);
-    if (user) {
-      user.setLogin = login;
-      user.setPassword = password;
+  update(id: number, user: UserInterface) {
+    const updateUser = this.item.find((user: User) => user.getId === id);
+    if (updateUser) {
+      updateUser.setLogin = user.login;
+      updateUser.setPassword = user.password;
       return "Usuário atualizado com sucesso";
     }
     return "Usuário não encontrado";
